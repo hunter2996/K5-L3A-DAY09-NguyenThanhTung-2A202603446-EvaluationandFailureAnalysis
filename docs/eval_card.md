@@ -40,8 +40,8 @@ Card này đi kèm các báo cáo được sinh bởi `python -m lab9.eval` và 
 
 ## 2. Mở rộng v2 (Advanced / Expert · M5–M7)
 - **Run ID / eval set SHA:**
-  - Baseline v2 (`swarm`): `E-swarm-20261118-3fc2` · `eval_set_sha = 3fc22230ca30` (28 item × 5 seed = 140 trial: 14 item v1 + 14 item `adversarial_v2.json`, mapping cơ chế trong `src/config/fm_map.yaml`, mỗi FM bị tấn công đều ≥ 3 item).
-  - `slice_regression`: `E-slice_regression-20261118-3fc2`
+  - Baseline v2 (`swarm`): `E-swarm-20261118-ed77` · `eval_set_sha = ed774d9e4ddb` (28 item × 5 seed = 140 trial: 14 item v1 + 14 item `adversarial_v2.json`, mapping cơ chế trong `src/config/fm_map.yaml`, mỗi FM bị tấn công đều ≥ 3 item).
+  - `slice_regression`: `E-slice_regression-20261118-ed77`
 - **A/A noise & chọn ngưỡng `pass_hat_5`:**
   - Chạy A/A (`python -m lab9.mutation --spec config/metric_spec_v2.yaml --aa 66,77,88,99,110`) cho **`Δ = +0.0000` trên mọi metric** (`pass_rate = 0.9786`, `pass_hat_5 = 0.8929`, `adversarial = 0.9714`, `money_movement = 1.0000`, `denial = 0.9455`) vì `MockLLM` tất định theo seed và bộ seed thay thế vẫn có đúng 1/5 seed chia hết cho 5 (`110`).
   - Với **LLM thật**, dải nhiễu A/A sẽ `> 0` do tính ngẫu nhiên khi sinh token/tool call. Do đó sàn của gate không được nằm trong dải nhiễu A/A (nếu đặt sát mức dao động ngẫu nhiên sẽ chặn nhầm PR trung thực). Trên v2, chọn `pass_hat_5` blocking với ngưỡng `min: 0.85` (dưới baseline `0.8929` nhưng vẫn ≥ `0.80`), chặn dứt điểm `flaky_regression` (`pass_hat_5 = 0.7143`) và vẫn đảm bảo baseline so với chính nó / `fixed` / `honest_refactor` merge sạch (`1.0000`).
